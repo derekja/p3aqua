@@ -1,0 +1,117 @@
+body,
+* {
+  font-family: "Karla", Arial, sans-serif;
+}
+
+.btn:focus,
+.btn-secondary:focus {
+  box-shadow: none;
+}
+
+.mapContainer {
+  height: 100vh;
+  /* width: calc(100% - 70px); */
+  width: 100%;
+}
+
+.leaflet-container {
+  height: 100vh;
+  width: 100%;
+  /* position: relative; */
+}
+
+.leaflet-control-scale-line {
+  border: none;
+  font-size: 18px;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  background: transparent none repeat scroll 0% 0%;
+  color: white;
+  box-shadow: none;
+  text-align: center;
+}
+
+.latlon > input {
+  width: 100%;
+}
+
+.add-pin i {
+  font-size: 0.7em;
+  padding-left: 8px;
+}
+
+.error {
+  color: #e6ebe0;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.latlon-modal .error {
+  font-size: 0.9em;
+  padding-bottom: 15px;
+}
+.leaflet-bottom {
+  bottom: 100px;
+}
+
+.modal-content {
+  color: #e6ebe0;
+  background: #066c99;
+}
+
+.modal-header .close {
+  text-shadow: none;
+  color: #e6ebe0;
+}
+
+.modal-header .btn-secondary {
+  background-color: rgba(59, 85, 94, 0.2);
+  box-shadow: none;
+}
+
+.leaflet-fade-anim .leaflet-tile,
+.leaflet-zoom-anim .leaflet-zoom-animated {
+  will-change: auto !important;
+}
+.modal-body .logos {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.modal-body .logos a {
+  margin: 20px 10px;
+}
+
+.modal-body .logos .logo {
+  max-height: 90px;
+  max-width: 200px;
+}
+
+.modal-body .esa {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.modal-body .esa img {
+  max-width: 40%;
+}
+
+.modal p {
+  margin-bottom: 25px;
+}
+
+@media (max-width: 1280px) {
+  .leaflet-bottom {
+    bottom: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .leaflet-bottom {
+    bottom: 80px;
+  }
+}
