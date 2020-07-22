@@ -10,25 +10,23 @@ import {
 //import { mapboxAccessToken } from "../mapboxAccessToken.json";
 import { azureMapsKey } from "../azureMapsKey.json";
 
-class CoaxMap extends Component {
-  onViewportChanged = viewport => {};
+//class CoaxMap extends Component {
+//onViewportChanged = viewport => {props.viewport};
+const CoaxMap = (props) => {
 
-  render() {
-    console.log("wwoww: ",azureMapsKey);
     return (
       <Map
-        // mousemove={e => this.mouseMove(e)}
-        // mouseMove={this.props.mouseMove}
-        onViewportChanged={this.onViewportChanged()}
-        viewport={this.props.viewport}
+
+        //onViewportChanged={this.onViewportChanged()}
+        viewport={props.viewport}
         doubleClickZoom={true}
-        onClick={this.props.addMarker}
+        onClick={props.addMarker}
         minZoom={6}
         maxBounds={[
           [44.887012, -111.137695], // southwest corner
           [59.92199, -144.624023] // northeast corner
         ]}
-        style={{ cursor: this.props.pointer }}
+        style={{ cursor: props.pointer }}
       >
         <TileLayer
          attribution='&amp;copy 1992 - 2020 TomTom'
@@ -42,26 +40,22 @@ class CoaxMap extends Component {
 
 
         <ScaleControl imperial={false} maxWidth={200} />
-        {this.props.displayChlor && (
+        {props.displayChlor && (
           <ImageOverlay
             bounds={[[59.5, -139.001], [47.001, -121.502]]}
             url={
-              this.props.curOverlay
-              // <img src={this.props.curOverlay} onLoad={this.props.loading} />
-              // <MapImg
-              //   imageURL={this.props.curOverlay}
-              //   onLoad={this.props.loading}
-              // />
+              props.curOverlay
+
             }
             opacity={0.9}
-            onLoad={this.props.loading}
+            onLoad={props.loading}
             onAdd={() => {
               console.log("wheee add! this is the fastest one");
             }}
           />
         )}
 
-        {this.props.markers.map((position, idx) => (
+        {props.markers.map((position, idx) => (
           <Marker key={`marker-${idx}`} position={position}>
             <Popup>
               {position.lat}, {position.lng}
@@ -71,6 +65,6 @@ class CoaxMap extends Component {
       </Map>
     );
   }
-}
+
 
 export default CoaxMap;

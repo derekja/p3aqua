@@ -5,7 +5,7 @@ import "../style/Popup.css";
 import "../style/ColorBar.css";
 import IntroModal from "./Modal";
 import Dashboard from "./Dashboard";
-import CoaxMap from "./CoaxMap";
+import CoaxMap from "./CoaxMap.js";
 import ColorBar from "./ColorBar";
 import Spinner from "react-tiny-spin";
 import withSizes from "react-sizes";

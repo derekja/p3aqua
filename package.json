@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
+    "azure-maps-control": "^2.0.27",
     "bootstrap": "^4.1.3",
     "express": "^4.17.1",
     "leaflet": "^1.3.4",
     "leaflet-spin": "^1.1.0",
     "react": "^16.5.2",
+    "react-azure-maps": "^0.1.2",
     "react-calendar": "^2.17.5",
     "react-dom": "^16.5.2",
     "react-leaflet": "^2.0.1",
@@ -17,7 +19,8 @@
     "react-scripts": "^3.4.0",
     "react-sizes": "^2.0.0",
     "react-tiny-spin": "^0.6.5",
-    "reactstrap": "^6.4.0"
+    "reactstrap": "^6.4.0",
+    "typescript": "^3.9.7"
   },
   "scripts": {
     "start": "react-scripts start",
