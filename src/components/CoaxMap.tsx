@@ -39,6 +39,8 @@ let debounceInterval = 30;
 let mapWid: any = undefined;
 let mapHei: any = undefined;
 let trueCentre: any = undefined;
+let rOffset: any = undefined;
+let l1Offset: any = undefined;
 
 const onClick = () => {
   console.log("ASD");
@@ -86,10 +88,20 @@ const mapMoveendL = (map: any) => {
 
   if (mapRight!=undefined) {
     console.log("set mapRight");
+        //get new offsets
+        let rPix: any = new Pixel((mapWid/4), (mapHei/2));
+        let cPix: any = new Pixel((0), (mapHei/2));
+        let rpos: any = mapRight.map.pixelsToPositions([rPix]);
+        let cpos: any = mapRight.map.pixelsToPositions([cPix]);
+        rOffset = rpos[0][0]-cpos[0][0];
+        console.log(rOffset);
+
 console.log(mapRight.map);
 console.log(mapRight.map.map.transform._center);
     mapRight.map.map.transform.center.lat= map.map.map.transform._center.lat;
-    mapRight.map.map.transform.center.lng= map.map.map.transform._center.lng;
+    //apply offset
+    mapRight.map.map.transform.center.lng= map.map.map.transform._center.lng + 2*rOffset;
+    console.log(rOffset);
     mapRefresh();
   }
   //map.map.resize(hei, wid, "noloop" );
@@ -103,23 +115,42 @@ const mapMoveendR = (map: any) => {
   mapWid = mapLeft.map.map.transform.width * 2;
   mapHei = mapLeft.map.map.transform.height;
 
-  let lPix: any = new Pixel((mapWid/4), (mapHei/2));
-  let lpos: any = mapLeft.map.pixelsToPositions([lPix]);
-  console.log(lpos);
-
-  //mapLeft.map.map.transform.center.lng = lpos[0];
+  let rPix: any = new Pixel((mapWid/2), (mapHei/2));
+  let cPix: any = new Pixel((mapWid/4), (mapHei/2));
+  let rpos: any = mapLeft.map.pixelsToPositions([rPix]);
+  let cpos: any = mapLeft.map.pixelsToPositions([cPix]);
+  l1Offset = rpos[0][0]-cpos[0][0];
+  console.log(l1Offset);
 
     console.log("set mapLeft");
     mapLeft.map.map.transform.center.lat = map.map.map.transform._center.lat;
-    mapLeft.map.map.transform.center.lng = map.map.map.transform._center.lng;
+
+    //apply offset
+    mapLeft.map.map.transform.center.lng = map.map.map.transform.center.lng - 2*l1Offset;
+    console.log(l1Offset);
     mapRefresh();
   }
+
+
+
+
   //map.map.resize(hei, wid, "noloop" );
 };
 
   const zoomMapL = (map: any) => {
 
+
+    console.log("zmtestL");
+
+
     mapRight.map.map.transform.zoom = mapLeft.map.map.transform.zoom;
+    //get new offsets only after new zoom
+    let rPix: any = new Pixel((mapWid/4), (mapHei/2));
+    let cPix: any = new Pixel((0), (mapHei/2));
+    let rpos: any = mapRight.map.pixelsToPositions([rPix]);
+    let cpos: any = mapRight.map.pixelsToPositions([cPix]);
+    rOffset = rpos[0][0]-cpos[0][0];
+    console.log(rOffset);
 
   }
 
@@ -127,23 +158,32 @@ const mapMoveendR = (map: any) => {
   const zoomMapR = (map: any) => {
 
     mapLeft.map.map.transform.zoom = mapRight.map.map.transform.zoom;
+    //get new offsets
+     // to get left offset, lng at right edge of map - lng of center. Since both are centered right now we'll move the left eye right a bit and the right eye left a bit
+
+  let rPix: any = new Pixel((mapWid/2), (mapHei/2));
+  let cPix: any = new Pixel((mapWid/4), (mapHei/2));
+  let rpos: any = mapLeft.map.pixelsToPositions([rPix]);
+  let cpos: any = mapLeft.map.pixelsToPositions([cPix]);
+  l1Offset = rpos[0][0]-cpos[0][0];
+  console.log(l1Offset);
   }
 
  const regMapL = (map: any) => {
   mapLeft = map;
   mapRefreshL = mapLeft.map._windowResizeCallback;
-
-
-
-  //set window to full size and center
   mapWid = mapLeft.map.map.transform.width * 2;
   mapHei = mapLeft.map.map.transform.height;
 
-  let lPix: any = new Pixel((mapWid/4), (mapHei/2));
-  //let rPix: any = new Pixel((3*mapWid/4), 1);
-  let lpos: any = mapLeft.map.pixelsToPositions([lPix]);
-  //let rpos: any = mapLeft.map.pixelsToPositions([rPix]);
-  console.log(lpos);
+
+  // to get left offset, lng at right edge of map - lng of center. Since both are centered right now we'll move the left eye right a bit and the right eye left a bit
+
+  let rPix: any = new Pixel((mapWid/2), (mapHei/2));
+  let cPix: any = new Pixel((mapWid/4), (mapHei/2));
+  let rpos: any = mapLeft.map.pixelsToPositions([rPix]);
+  let cpos: any = mapLeft.map.pixelsToPositions([cPix]);
+  l1Offset = rpos[0][0]-cpos[0][0];
+  console.log(l1Offset);
 
   let ppos: any = new data.Position(mapLeft.map.map.transform.center.lng, mapLeft.map.map.transform.center.lat,0);
   //mapLeft.map.positionsToPixels(trueCentre);
@@ -155,18 +195,32 @@ const mapMoveendR = (map: any) => {
   console.log("regMapL  wid: "+mapWid+"    height: "+mapHei)
 
   console.log(trueCentre);
-  mapLeft.map.map.transform.center.lng = trueCentre;
+  mapLeft.map.map.transform.center.lng = trueCentre + l1Offset;
   console.log(mapLeft.map.map.transform.center.lng)
 
+  if (mapRight!=undefined) {mapRefresh();}
 
  }
  const regMapR = (map: any) => {
    mapRight = map;
    mapRefreshR = mapRight.map._windowResizeCallback;
+   mapWid = mapRight.map.map.transform.width * 2;
+   mapHei = mapRight.map.map.transform.height;
 
-   mapRight.map.map.transform.center.lng = trueCentre;
+   let rPix: any = new Pixel((mapWid/4), (mapHei/2));
+   let cPix: any = new Pixel((0), (mapHei/2));
+   let rpos: any = mapRight.map.pixelsToPositions([rPix]);
+   let cpos: any = mapRight.map.pixelsToPositions([cPix]);
+   rOffset = rpos[0][0]-cpos[0][0];
+   console.log(rOffset);
+
+
+
+   mapRight.map.map.transform.center.lng = trueCentre - rOffset;
    console.log(mapRight.map.map.transform.center.lng)
   console.log(map)
+
+  if (mapLeft!=undefined) {mapRefresh();}
 }
 
 const styles = {
@@ -201,7 +255,7 @@ const CoaxMap: React.FC = (props:any) => {
 
   const optionL: IAzureMapOptions = useMemo(() => {
 
-    trueCentre = props.viewport.center[1];
+    trueCentre = props.viewport.center[1]; //lng only
 
     return {
       authOptions: {
