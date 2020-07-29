@@ -15,7 +15,7 @@ import {
   IAzureMapControls,
   AzureDataPosition
 } from "react-azure-maps";
-import SplitPane, { Pane } from "react-split-pane";
+import SplitPane from "react-split-pane";
 import { AuthenticationType, data, Pixel } from "azure-maps-control";
 
 import { azureMapsKey } from "../azureMapsKey.json";
