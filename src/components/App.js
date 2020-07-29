@@ -5,8 +5,8 @@ import "../style/Popup.css";
 import "../style/ColorBar.css";
 import IntroModal from "./Modal";
 import Dashboard from "./Dashboard";
-import CoaxMap from "./CoaxMap.js";
-import ColorBar from "./ColorBar";
+import CoaxMap from "./CoaxMap.tsx";
+//import ColorBar from "./ColorBar";
 import Spinner from "react-tiny-spin";
 import withSizes from "react-sizes";
 import {
@@ -40,6 +40,8 @@ class App extends Component {
     super(props);
     this.state = {
       curOverlay: "",
+      curOverlayL: "",
+      curOverlayR: "",
       date: new Date(),
       dateList: undefined,
       displayChlor: true,
@@ -47,9 +49,8 @@ class App extends Component {
       markers: [],
       modal: false, //TODO make true. false for dev only
       viewport: DEFAULT_VIEWPORT,
-      zoneVisible: false,
       errorMsg: "",
-      loading: true,
+      loading: false,
       infoBox: {}
 
     };
@@ -66,8 +67,10 @@ class App extends Component {
           let dateList = createValidDateList(dates);
           let date = findLatestDate(dateList);
           let curOverlay = getImgPath(date);
+          let curOverlayL = getImgPath(date);
+          let curOverlayR = getImgPath(date); //update!
           let errorMsg = checkIfDateIsValid(date, dateList);
-          this.setState({ dateList, date, curOverlay, errorMsg });
+          this.setState({ dateList, date, curOverlay, curOverlayL, curOverlayR, errorMsg });
           console.log("gotDates: ", date);
         },
         // Note: it's important to handle errors here
@@ -92,9 +95,11 @@ class App extends Component {
   onChangeDate = date => {
     this.setState({ loading: true }, () => {
       let errorMsg = checkIfDateIsValid(date, this.state.dateList);
-      let path = getImgPath(date);
+      let pathL = getImgPath(date);
+      let pathR = getImgPath(date); //CHANGE!
       this.setState({
-        curOverlay: path,
+        curOverlayL: pathL,
+        curOverlayR: pathR,
         date,
         errorMsg
       });
@@ -110,9 +115,10 @@ class App extends Component {
   };
 
   addMarker = e => {
-    //console.log("marker: ", getShortLatLng(e.latlng));
-    //console.log("screen: ", getPngCoords(e.latlng));
-    let x = getPngCoords(e.latlng);
+    console.log(e);
+    console.log("marker: ", getShortLatLng(e.position));
+    console.log("screen: ", getPngCoords(e.position));
+    let x = getPngCoords(e.position);
     let yr = this.state.date.getFullYear().toString();
     let m = (this.state.date.getMonth() + 1).toString();
     let d = this.state.date.getDate().toString();
@@ -147,6 +153,8 @@ class App extends Component {
     });
   };
 
+
+
   toggleChlor = displayChlor => {
     this.setState({ displayChlor });
   };
@@ -176,9 +184,9 @@ class App extends Component {
               this.mouseMove(e);
             }}
             viewport={this.state.viewport}
-            curOverlay={this.state.curOverlay}
+            curOverlayL={this.state.curOverlayL}
+            curOverlayR={this.state.curOverlayR}
             displayChlor={this.state.displayChlor}
-            zoneVisible={this.state.zoneVisible}
             markers={this.state.markers}
             addMarker={e => {
               this.addMarker(e);
@@ -187,7 +195,7 @@ class App extends Component {
             loading={this.loading}
           />
         </div>
-        <ColorBar toggleInfo={this.toggleModal} infoBox={this.state.infoBox} />
+
         <Dashboard
           displayChlor={this.state.displayChlor}
           toggleChlor={this.toggleChlor}

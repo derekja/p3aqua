@@ -62,6 +62,12 @@
   margin-bottom: 0;
 }
 
+.dd Dropdown {
+  min-width: 5rem;
+  cursor: pointer;
+  overflow: auto;
+}
+
 .coordinates {
   display: flex;
 }
@@ -112,7 +118,7 @@ select:focus {
 }
 
 .dropdown {
-  float: right;
+  float: left;
 }
 
 .dropdown-menu {

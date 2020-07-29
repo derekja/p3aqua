@@ -2,7 +2,7 @@ import React from "react";
 import { Nav, Navbar } from "reactstrap";
 import DateSelector from "./DateSelector";
 import Coordinates from "./Coordinates";
-import LayerPicker from "../LayerPicker";
+import LayerPicker from "../LayerPicker/index.tsx";
 import sizes from "react-sizes";
 
 const Dashboard = props => (
@@ -34,7 +34,16 @@ const Dashboard = props => (
         displayChlor={props.displayChlor}
         mobileVersion={props.mobileVersion}
       />
-      <Coordinates
+
+    </Nav>
+  </Navbar>
+);
+
+export default Dashboard;
+
+//export default Dashboard;
+/*
+     <Coordinates
         addMarker={props.addMarker}
         toggleDropPin={props.toggleDropPin}
         droppingPin={props.droppingPin}
@@ -48,10 +57,4 @@ const Dashboard = props => (
         errorMsg={props.errorMsg}
         mobileVersion={props.mobileVersion}
       />
-    </Nav>
-  </Navbar>
-);
-
-export default Dashboard;
-
-//export default Dashboard;
+      */

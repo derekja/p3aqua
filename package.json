@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
+    "@types/reactstrap": "^8.5.0",
     "azure-maps-control": "^2.0.27",
     "bootstrap": "^4.1.3",
     "express": "^4.17.1",
@@ -18,6 +19,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.4.0",
     "react-sizes": "^2.0.0",
+    "react-split-pane": "^2.0.3",
     "react-tiny-spin": "^0.6.5",
     "reactstrap": "^6.4.0",
     "typescript": "^3.9.7"

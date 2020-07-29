@@ -127,22 +127,22 @@ export function checkIfDateIsValid(date, dateList) {
 }
 
 export function getShortLatLng(latlng) {
-  const lat = latlng.lat.toFixed(6);
-  const lng = latlng.lng.toFixed(6);
+  const lat = latlng[1].toFixed(6);
+  const lng = latlng[0].toFixed(6);
   return { lat, lng };
 }
 
 export function getPngCoords(latlng) {
   const imgOrigin = { lat: 59.5, lng: -139.001 };
-  const imgLat = imgOrigin.lat - latlng.lat;
-  const imgLng = -1 * (imgOrigin.lng - latlng.lng);
+  const imgLat = imgOrigin.lat - latlng[1];
+  const imgLng = -1 * (imgOrigin.lng - latlng[0]);
   const x = Math.round(imgLng * (6493 / 17.499));
   //following didn't work because conversion from degrees lat to meters in 3857 is not linear
   //const y = Math.round(imgLat * (7823 / 12.499));
   //will have to take meters at 59.5 degrees and meters at lat, subtract and divide by 300 (since 300 meters per pixel)
   const metersOrigin = (Math.log(Math.tan((90 + 59.5) * Math.PI / 360)) / (Math.PI / 180))*20037508.34/180;
-  const metersCurrent = (Math.log(Math.tan((90 + latlng.lat) * Math.PI / 360)) / (Math.PI / 180))*20037508.34/180;
+  const metersCurrent = (Math.log(Math.tan((90 + latlng[1]) * Math.PI / 360)) / (Math.PI / 180))*20037508.34/180;
   const y = Math.round(Math.abs(metersCurrent-metersOrigin)/300);
-  console.log("x: "+x+" y: "+y+" imgLng: "+imgLng+" imgLat: "+imgLat+" lng: "+latlng.lng+" lat: "+latlng.lat+"metersOrigin: "+metersOrigin+" metersCurrent: "+metersCurrent);
+  console.log("x: "+x+" y: "+y+" imgLng: "+imgLng+" imgLat: "+imgLat+" lng: "+latlng[0]+" lat: "+latlng[1]+"metersOrigin: "+metersOrigin+" metersCurrent: "+metersCurrent);
   return { x, y };
 }
